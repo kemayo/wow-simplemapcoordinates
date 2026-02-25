@@ -1,0 +1,25 @@
+## Interface: 120001, 120000
+## Title: Simple Map Coordinates
+## Notes: Show coordinates on the map
+## Author: Kemayo
+## Version: @project-version@
+## IconTexture: Interface\Icons\Ability_Spy
+## DefaultState: enabled
+## SavedVariables: SimpleMapCoordinatesDB
+## X-eMail: kemayo @ gmail DOT com
+## X-Curse-Project-ID: 
+## X-Wago-ID: 
+
+## Category: Map
+## Category-deDE: Karte
+## Category-esES: Mapa
+## Category-esMX: Mapa
+## Category-frFR: Carte
+## Category-itIT: Mappa
+## Category-koKR: 지도
+## Category-ptBR: Mapa
+## Category-ruRU: Карта
+## Category-zhCN: 地图
+## Category-zhTW: 地圖
+
+addon.lua
