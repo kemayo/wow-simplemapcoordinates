@@ -32,8 +32,6 @@ frame:SetScript("OnUpdate", function(self, elapsed)
     if t < WAIT_TIME then return end
     t = 0
 
-    if C_PetBattles.IsInBattle() then return self:Hide() end
-    if not ns.db.floating_combat and InCombatLockdown() then return self:Hide() end
     if not (ns.db.floating_player or ns.db.floating_mapID) then
         return self:Hide()
     end
@@ -87,3 +85,4 @@ function ns:RefreshFloating()
     end
     frame:Show()
 end
+ns.refreshers["Floating"] = ns.RefreshFloating

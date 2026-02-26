@@ -19,20 +19,14 @@ EventUtil.ContinueOnAddOnLoaded(myname, function()
     db = _G[dbname]
     ns.db = db
 
-    EventRegistry:RegisterCallback("MapCanvas.MapSet", function(_, mapID) ns:RefreshWorldMap() end)
-    EventRegistry:RegisterCallback("WorldMapOnShow", function() ns:RefreshWorldMap() end)
-    if WorldMapTitleButton then
-        -- Classic!
-        hooksecurefunc(WorldMapFrame, "OnMapChanged", function() ns:Refresh() end)
-        WorldMapFrame:HookScript("OnShow", function() ns:Refresh() end)
-    end
-
     ns:SetUpConfig()
 end)
 
+ns.refreshers = {}
 function ns:Refresh()
-    self:RefreshWorldMap()
-    self:RefreshFloating()
+    for _, method in pairs(ns.refreshers) do
+        method(ns)
+    end
 end
 
 do

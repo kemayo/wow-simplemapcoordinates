@@ -105,3 +105,12 @@ function ns:RefreshWorldMap()
 
     container:Show()
 end
+
+ns.refreshers["WorldMap"] = ns.RefreshWorldMap
+EventRegistry:RegisterCallback("MapCanvas.MapSet", function(_, mapID) ns:RefreshWorldMap() end)
+EventRegistry:RegisterCallback("WorldMapOnShow", function() ns:RefreshWorldMap() end)
+if WorldMapTitleButton then
+    -- Classic!
+    hooksecurefunc(WorldMapFrame, "OnMapChanged", function() ns:RefreshWorldMap() end)
+    WorldMapFrame:HookScript("OnShow", function() ns:RefreshWorldMap() end)
+end
