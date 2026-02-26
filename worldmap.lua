@@ -14,12 +14,12 @@ function ns:GetWorldMapContainer()
 		container:SetFrameStrata("HIGH")
         container:SetHeight(14)
 
-        local t, WAIT_TIME = 0, 0.1
+        local t, WAIT_TIME = 0, 0.2
         container:SetScript("OnUpdate", function(_, elapsed)
             t = t + elapsed
             if t < WAIT_TIME then return end
-
             t = 0
+
             local mapID = WorldMapFrame:GetMapID()
             if container.player:IsVisible() then
                 local position = C_Map.GetPlayerMapPosition(mapID, "player")

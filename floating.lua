@@ -26,7 +26,7 @@ frame.text:SetAllPoints()
 frame:SetPoint("CENTER")
 frame:SetSize(120, 18)
 
-local t, WAIT_TIME = 0, 0.1
+local t, WAIT_TIME = 0, 0.2
 frame:SetScript("OnUpdate", function(self, elapsed)
     t = t + elapsed
     if t < WAIT_TIME then return end
@@ -40,13 +40,13 @@ frame:SetScript("OnUpdate", function(self, elapsed)
     local mapID = C_Map.GetBestMapForUnit("player")
     local position = mapID and C_Map.GetPlayerMapPosition(mapID, "player")
 
-    local mapID_string = mapID and "#"..mapID or ""
-    local position_string = position and ns.FormatPositionAsCoords(position, ns.db.precision) or "?, ?"
-    self.text:SetText(string.trim(string.format(
-        "%s %s",
-        ns.db.floating_mapID and mapID_string or "",
-        ns.db.floating_player and position_string or ""
-    )))
+    if ns.db.floating_mapID and ns.db.floating_player then
+        self.text:SetFormattedText("#%s %s", mapID or "??", ns.FormatPositionAsCoords(position))
+    elseif ns.db.floating_player then
+        self.text:SetText(ns.FormatPositionAsCoords(position))
+    elseif ns.db.floating_mapID then
+        self.text:SetFormattedText("#%s", mapID or "??")
+    end
     self:SetWidth(frame.text:GetUnboundedStringWidth() + 4)
 end)
 
