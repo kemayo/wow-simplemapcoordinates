@@ -21,6 +21,11 @@ EventUtil.ContinueOnAddOnLoaded(myname, function()
 
     EventRegistry:RegisterCallback("MapCanvas.MapSet", function(_, mapID) ns:RefreshWorldMap() end)
     EventRegistry:RegisterCallback("WorldMapOnShow", function() ns:RefreshWorldMap() end)
+    if WorldMapTitleButton then
+        -- Classic!
+        hooksecurefunc(WorldMapFrame, "OnMapChanged", function() ns:Refresh() end)
+        WorldMapFrame:HookScript("OnShow", function() ns:Refresh() end)
+    end
 
     ns:SetUpConfig()
 end)

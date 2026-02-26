@@ -11,7 +11,7 @@ function ns:GetWorldMapContainer()
         container.cursor:SetJustifyH("CENTER")
         container.map:SetJustifyH("CENTER")
 
-		container:SetFrameStrata("HIGH")
+        container:SetFrameStrata("HIGH")
         container:SetHeight(14)
 
         local t, WAIT_TIME = 0, 0.2
@@ -38,7 +38,7 @@ function ns:GetWorldMapContainer()
 end
 
 function ns:RefreshWorldMap()
-	if not WorldMapFrame:IsVisible() then return end
+    if not WorldMapFrame:IsVisible() then return end
     local container = self:GetWorldMapContainer()
     if not container then return end
     -- print("laying out coordinates", self.db.worldmap_player, self.db.worldmap_cursor, self.db.mapID)
@@ -46,15 +46,29 @@ function ns:RefreshWorldMap()
         return container:Hide()
     end
     container:ClearAllPoints()
-    if self.db.worldmap_position == "below-outside" then
-        container:SetPoint("TOPLEFT", WorldMapFrame.ScrollContainer, "BOTTOMLEFT", 30, -5)
-        container:SetPoint("TOPRIGHT", WorldMapFrame.ScrollContainer, "BOTTOMRIGHT", -30, -5)
-    elseif self.db.worldmap_position == "below-inside" then
-        container:SetPoint("BOTTOMLEFT", WorldMapFrame.ScrollContainer, "BOTTOMLEFT", 30, 5)
-        container:SetPoint("BOTTOMRIGHT", WorldMapFrame.ScrollContainer, "BOTTOMRIGHT", -30, 5)
-    elseif self.db.worldmap_position == "title" then
-        container:SetPoint("TOPLEFT", WorldMapFrame.BorderFrame.TitleContainer, "TOPLEFT", 10, -3)
-        container:SetPoint("BOTTOMRIGHT", WorldMapFrame.BorderFrame.TitleContainer, "BOTTOMRIGHT", -10, -0)
+    if WorldMapTitleButton then
+        -- Classic!
+        if self.db.worldmap_position == "below-outside" then
+            container:SetPoint("TOPLEFT", WorldMapFrame, "BOTTOMLEFT", 30, 4)
+            container:SetPoint("TOPRIGHT", WorldMapFrame, "BOTTOMRIGHT", -30, 4)
+        elseif self.db.worldmap_position == "below-inside" then
+            container:SetPoint("BOTTOMLEFT", WorldMapFrame, "BOTTOMLEFT", 30, 10)
+            container:SetPoint("BOTTOMRIGHT", WorldMapFrame, "BOTTOMRIGHT", -30, 10)
+        elseif self.db.worldmap_position == "title" then
+            container:SetPoint("TOPLEFT", WorldMapTitleButton, 0, -4)
+            container:SetPoint("RIGHT", WorldMapTitleButton, "RIGHT", 4, 0)
+        end
+    else
+        if self.db.worldmap_position == "below-outside" then
+            container:SetPoint("TOPLEFT", WorldMapFrame.ScrollContainer, "BOTTOMLEFT", 30, -5)
+            container:SetPoint("TOPRIGHT", WorldMapFrame.ScrollContainer, "BOTTOMRIGHT", -30, -5)
+        elseif self.db.worldmap_position == "below-inside" then
+            container:SetPoint("BOTTOMLEFT", WorldMapFrame.ScrollContainer, "BOTTOMLEFT", 30, 5)
+            container:SetPoint("BOTTOMRIGHT", WorldMapFrame.ScrollContainer, "BOTTOMRIGHT", -30, 5)
+        elseif self.db.worldmap_position == "title" then
+            container:SetPoint("TOPLEFT", WorldMapFrame.BorderFrame.TitleContainer, "TOPLEFT", 10, -3)
+            container:SetPoint("BOTTOMRIGHT", WorldMapFrame.BorderFrame.TitleContainer, "BOTTOMRIGHT", -10, -0)
+        end
     end
     container.player:ClearAllPoints()
     if self.db.worldmap_player then
@@ -75,9 +89,14 @@ function ns:RefreshWorldMap()
     container.map:ClearAllPoints()
     if self.db.mapID then
         if self.db.worldmap_position == "title" then
-            container.map:SetPoint("LEFT", 24, 0)
+            if WorldMapTitleButton then
+                -- Classic!
+                container.map:SetPoint("TOPLEFT", WorldMapTitleButton, "BOTTOMLEFT", 8, 0)
+            else
+                container.map:SetPoint("LEFT", 24, 0)
+            end
         else
-            container.map:SetPoint("CENTER", 0, self.db.worldmap_position == "title" and 16 or 0)
+            container.map:SetPoint("CENTER")
         end
         container.map:Show()
     else
