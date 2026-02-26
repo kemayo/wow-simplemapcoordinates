@@ -26,9 +26,8 @@ EventUtil.ContinueOnAddOnLoaded(myname, function()
 end)
 
 function ns:Refresh()
-    if WorldMapFrame:IsVisible() then
-        self:RefreshWorldMap()
-    end
+    self:RefreshWorldMap()
+    self:RefreshFloating()
 end
 
 do

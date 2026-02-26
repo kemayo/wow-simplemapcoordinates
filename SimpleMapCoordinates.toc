@@ -24,5 +24,6 @@
 
 addon.lua
 worldmap.lua
+floating.lua
 
 config.lua

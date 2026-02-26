@@ -51,6 +51,13 @@ function ns.SetUpConfig()
         "Number of digits of precision to show in the coordinates"
     )
 
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Floating block"))
+
+    Settings.CreateCheckbox(category, MakeSetting(category, "floating_player", "Player coordinates", true), "Show player coordinates")
+    Settings.CreateCheckbox(category, MakeSetting(category, "floating_mapID", "Map ID", false), "Show the map's internal ID")
+    Settings.CreateCheckbox(category, MakeSetting(category, "floating_backdrop", "Background", true), "Show a background for the block")
+    Settings.CreateCheckbox(category, MakeSetting(category, "floating_combat", "Show in combat", true), "Show the block while you're in combat")
+
     Settings.RegisterAddOnCategory(category)
 
     do

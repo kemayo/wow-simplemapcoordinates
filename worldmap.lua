@@ -1,8 +1,8 @@
 local myname, ns = ...
 
 function ns:GetWorldMapContainer()
-    if not WorldMapFrame.SimpleMapCoordinatesContainer then
-        local container = CreateFrame("Frame", "SimpleMapCoordinatesMapFrame", WorldMapFrame.ScrollContainer)
+    if not _G.SimpleMapCoordinatesWorldMapFrame then
+        local container = CreateFrame("Frame", "SimpleMapCoordinatesWorldMapFrame", WorldMapFrame.ScrollContainer)
         container.player = container:CreateFontString("$parentPlayer", "OVERLAY", "NumberFontNormal")
         container.cursor = container:CreateFontString("$parentCursor", "OVERLAY", "NumberFontNormal")
         container.map = container:CreateFontString("$parentMap", "OVERLAY", "NumberFontNormal")
@@ -32,13 +32,12 @@ function ns:GetWorldMapContainer()
                 container.map:SetFormattedText("MapID: %d", mapID)
             end
         end)
-
-        WorldMapFrame.SimpleMapCoordinatesContainer = container
     end
-    return WorldMapFrame.SimpleMapCoordinatesContainer
+    return _G.SimpleMapCoordinatesWorldMapFrame
 end
 
 function ns:RefreshWorldMap()
+	if not WorldMapFrame:IsVisible() then return end
     local container = self:GetWorldMapContainer()
     if not container then return end
     -- print("laying out coordinates", self.db.worldmap_player, self.db.worldmap_cursor, self.db.mapID)
