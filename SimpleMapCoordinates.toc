@@ -23,4 +23,6 @@
 ## Category-zhTW: 地圖
 
 addon.lua
+worldmap.lua
+
 config.lua
