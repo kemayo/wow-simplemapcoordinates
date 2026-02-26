@@ -11,6 +11,7 @@ function ns:GetWorldMapContainer()
         container.cursor:SetJustifyH("CENTER")
         container.map:SetJustifyH("CENTER")
 
+		container:SetFrameStrata("HIGH")
         container:SetHeight(14)
 
         local t, WAIT_TIME = 0, 0.1
@@ -48,15 +49,12 @@ function ns:RefreshWorldMap()
     if self.db.worldmap_position == "below-outside" then
         container:SetPoint("TOPLEFT", WorldMapFrame.ScrollContainer, "BOTTOMLEFT", 30, -5)
         container:SetPoint("TOPRIGHT", WorldMapFrame.ScrollContainer, "BOTTOMRIGHT", -30, -5)
-        container:SetFrameStrata("MEDIUM")
     elseif self.db.worldmap_position == "below-inside" then
         container:SetPoint("BOTTOMLEFT", WorldMapFrame.ScrollContainer, "BOTTOMLEFT", 30, 5)
         container:SetPoint("BOTTOMRIGHT", WorldMapFrame.ScrollContainer, "BOTTOMRIGHT", -30, 5)
-        container:SetFrameStrata("MEDIUM")
     elseif self.db.worldmap_position == "title" then
         container:SetPoint("TOPLEFT", WorldMapFrame.BorderFrame.TitleContainer, "TOPLEFT", 10, -3)
         container:SetPoint("BOTTOMRIGHT", WorldMapFrame.BorderFrame.TitleContainer, "BOTTOMRIGHT", -10, -0)
-        container:SetFrameStrata("HIGH")
     end
     container.player:ClearAllPoints()
     if self.db.worldmap_player then
