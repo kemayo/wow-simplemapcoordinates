@@ -22,19 +22,20 @@ end
 
 EventUtil.ContinueOnAddOnLoaded(myname, function()
     local dbname = myname.."DB"
-    _G[dbname] = setmetatable(_G[dbname] or {}, {__index=defaults})
+    -- _G[dbname] = setmetatable(_G[dbname] or {}, {__index=defaults})
+    _G[dbname] = _G[dbname] or {}
     db = _G[dbname]
     ns.db = db
 
-    EventRegistry:RegisterCallback("MapCanvas.MapSet", function(_, mapID)
-        ns:SetUpMap(mapID)
-    end)
+    EventRegistry:RegisterCallback("MapCanvas.MapSet", function(_, mapID) ns:RefreshWorldMap() end)
+    EventRegistry:RegisterCallback("WorldMapOnShow", function() ns:RefreshWorldMap() end)
+
+    ns:SetUpConfig()
 end)
 
-function ns:SetUpMap()
-    local container = WorldMapFrame.SimpleMapCoordinatesContainer
-    if not container then
-        container = CreateFrame("Frame", "SimpleMapCoordinatesMapFrame", WorldMapFrame.ScrollContainer)
+function ns:GetWorldMapContainer()
+    if not WorldMapFrame.SimpleMapCoordinatesContainer then
+        local container = CreateFrame("Frame", "SimpleMapCoordinatesMapFrame", WorldMapFrame.ScrollContainer)
         container.player = container:CreateFontString("$parentPlayer", "OVERLAY", "NumberFontNormal")
         container.cursor = container:CreateFontString("$parentCursor", "OVERLAY", "NumberFontNormal")
         container.map = container:CreateFontString("$parentMap", "OVERLAY", "NumberFontNormal")
@@ -67,6 +68,19 @@ function ns:SetUpMap()
 
         WorldMapFrame.SimpleMapCoordinatesContainer = container
     end
+    return WorldMapFrame.SimpleMapCoordinatesContainer
+end
+
+function ns:Refresh()
+    if WorldMapFrame:IsVisible() then
+        self:RefreshWorldMap()
+    end
+end
+
+function ns:RefreshWorldMap()
+    local container = self:GetWorldMapContainer()
+    if not container then return end
+    print("laying out coordinates", self.db.worldmap_player, self.db.worldmap_cursor, self.db.mapID)
     if not (self.db.worldmap_player or self.db.worldmap_cursor or self.db.mapID) then
         return container:Hide()
     end
@@ -88,6 +102,7 @@ function ns:SetUpMap()
     if self.db.worldmap_player then
         container.player:SetPoint("LEFT")
         container.player:SetPoint("RIGHT", container, "CENTER", -20, 0)
+        container.player:Show()
     else
         container.player:Hide()
     end
@@ -95,12 +110,18 @@ function ns:SetUpMap()
     if self.db.worldmap_cursor then
         container.cursor:SetPoint("RIGHT")
         container.cursor:SetPoint("LEFT", container, "CENTER", 20, 0)
+        container.cursor:Show()
     else
         container.cursor:Hide()
     end
     container.map:ClearAllPoints()
     if self.db.mapID then
-        container.map:SetPoint("CENTER", 0, self.db.worldmap_position == "title" and 16 or 0)
+        if self.db.worldmap_position == "title" then
+            container.map:SetPoint("LEFT", 24, 0)
+        else
+            container.map:SetPoint("CENTER", 0, self.db.worldmap_position == "title" and 16 or 0)
+        end
+        container.map:Show()
     else
         container.map:Hide()
     end
