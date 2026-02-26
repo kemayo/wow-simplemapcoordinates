@@ -1,5 +1,7 @@
 local myname, ns = ...
 
+ns.Settings = {}
+
 -- the slider is ridiculously spammy
 local bucket = CreateFrame("Frame")
 bucket:SetScript("OnShow", function(self)
@@ -21,6 +23,7 @@ end
 local function MakeSetting(category, key, name, default, typeOverride)
     local setting = Settings.RegisterAddOnSetting(category, myname.."_"..key, key, _G[myname.."DB"], typeOverride or type(default), name, default)
     setting:SetValueChangedCallback(OnSettingChanged)
+    ns.Settings[key] = setting
     return setting
 end
 
