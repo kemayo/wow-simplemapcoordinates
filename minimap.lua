@@ -21,7 +21,7 @@ local function MakeMinimapFrame(name)
     frame.layoutType = "UniqueCornersLayout"
     frame.layoutTextureKit = "ui-hud-minimap-button"
     frame:OnLoad()
-    return
+    return frame
 end
 
 local playerFrame
