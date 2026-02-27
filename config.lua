@@ -54,6 +54,12 @@ function ns.SetUpConfig()
         "Number of digits of precision to show in the coordinates"
     )
 
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(MINIMAP_LABEL))
+
+    Settings.CreateCheckbox(category, MakeSetting(category, "minimap_player", "Player coordinates", true), "Show player coordinates")
+    Settings.CreateCheckbox(category, MakeSetting(category, "minimap_cursor", "Cursor coordinates", true), "Show the mouse cursor's coordinates if it's over the minimap")
+    Settings.CreateCheckbox(category, MakeSetting(category, "minimap_mapID", "Map ID", false), "Show the map's internal ID")
+
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Floating block"))
 
     Settings.CreateCheckbox(category, MakeSetting(category, "floating_player", "Player coordinates", false), "Show player coordinates")
