@@ -1,4 +1,4 @@
-## Interface: 120007, 50504, 30405, 20505, 11508
+## Interface: 120105, 50504, 30405, 20506, 11509, 16001
 ## Title: Simple Map Coordinates
 ## Notes: Show coordinates on the map
 ## Author: Kemayo
